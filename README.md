@@ -16,4 +16,4 @@ this small bit of ruby code retrieves the following property details from COJ.ne
 
 this requires a list of RE numbers which are currently hard-coded.
 
-```ruby property_details.rb``` to generate a CSV file.
+```$ ruby property_details.rb``` to generate a CSV file.

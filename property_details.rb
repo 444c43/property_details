@@ -43,5 +43,5 @@ class PropertyDetails
   end
 end
 
-search = PropertySearch.new
+search = PropertyDetails.new
 search.create_csv
