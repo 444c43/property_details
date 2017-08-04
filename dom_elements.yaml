@@ -1,0 +1,7 @@
+property_address: '#ctl00_cphBody_lblPrimarySiteAddressLine1'
+property_locale: '#ctl00_cphBody_lblPrimarySiteAddressLine2'
+owner_name: '#ctl00_cphBody_repeaterOwnerInformation_ctl00_lblOwnerName'
+mailing_address: '#ctl00_cphBody_repeaterOwnerInformation_ctl00_lblMailingAddressLine1'
+mailing_locale: '#ctl00_cphBody_repeaterOwnerInformation_ctl00_lblMailingAddressLine3'
+year_built: '#ctl00_cphBody_repeaterBuilding_ctl00_lblYearBuilt'
+bed_and_baths: '#ctl00_cphBody_repeaterBuilding_ctl00_gridBuildingAttributes'
