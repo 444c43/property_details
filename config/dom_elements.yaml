@@ -1,0 +1,18 @@
+elements:
+  building_type: '#ctl00_cphBody_repeaterBuilding_ctl00_lblBuildingType'
+  mailing_address: '#ctl00_cphBody_repeaterOwnerInformation_ctl00_lblMailingAddressLine1'
+  mailing_locale: '#ctl00_cphBody_repeaterOwnerInformation_ctl00_lblMailingAddressLine3'
+  owner_name: '#ctl00_cphBody_repeaterOwnerInformation_ctl00_lblOwnerName'
+  property_address: '#ctl00_cphBody_lblPrimarySiteAddressLine1'
+  property_locale: '#ctl00_cphBody_lblPrimarySiteAddressLine2'
+  year_built: '#ctl00_cphBody_repeaterBuilding_ctl00_lblYearBuilt'
+tables:
+  air_cond: '#ctl00_cphBody_repeaterBuilding_ctl00_gridBuildingElements'
+  bathrooms: '#ctl00_cphBody_repeaterBuilding_ctl00_gridBuildingAttributes'
+  bedrooms: '#ctl00_cphBody_repeaterBuilding_ctl00_gridBuildingAttributes'
+  heated_area: '#ctl00_cphBody_repeaterBuilding_ctl00_gridBuildingArea'
+  roof_cover: '#ctl00_cphBody_repeaterBuilding_ctl00_gridBuildingElements'
+  roof_struct: '#ctl00_cphBody_repeaterBuilding_ctl00_gridBuildingElements'
+  last_sale_date: '#ctl00_cphBody_gridSalesHistory'
+  last_sale_price: '#ctl00_cphBody_gridSalesHistory'
+  last_sale_deed_type: '#ctl00_cphBody_gridSalesHistory'
