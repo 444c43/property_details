@@ -1,32 +1,40 @@
-module PropertyMethods
-  def modify_key_values(line)
-    line = modify_mailing_locale(line)
-    modify_bed_and_bath(line)
+require_relative 'building_area'
+require_relative 'building_attributes'
+require_relative 'building_elements'
+require_relative 'sales_history'
+
+module RecordBuilder 
+  include BuildingAttributes
+  include BuildingElements
+  include BuildingArea
+  include SalesHistory
+
+  def headers
+    list = @dom.map do | key, value |
+      value.keys
+    end.flatten
+
+    list << "re_number"
+  end
+
+  def map_dom_elements
+    @dom["elements"].map do |key,value|
+      [key, @page.css(value).text]
+    end.to_h
+  end
+
+  def add_tables
+    tables = {}
+    @dom["tables"].map do |key,value|
+      table = @page.css(value).css('tr')
+      tables.merge!(send(key, table))
+    end
+    tables
   end
 
   private
 
-  def modify_mailing_locale(line)
-    locale = line["mailing_locale"].scan(city_state_zip).flatten
-    line["mailing_city"] = locale[0]
-    line["mailing_state"] = locale[1]
-    line["mailing_zip"] = locale[2]
-    line.delete("mailing_locale")
-    line
-  end
-
-  def modify_bed_and_bath(line)
-    line["bedrooms"] = line["bed_and_baths"].scan(rooms("Bedrooms"))[0][1]
-    line["bathrooms"] = line["bed_and_baths"].scan(rooms("Baths"))[0][1]
-    line.delete("bed_and_baths")
-    line
-  end
-
-  def city_state_zip
-    /(\w+),\s(\w{2})\s(.*)/
-  end
-
-  def rooms(type)
-    /(#{type})(\d+\.\d+)/
+  def parse_table(table_element, text)
+    table_element.map { |row| row.css('td').map {|elem| elem.text } if row.content.include? text }.compact.flatten
   end
 end

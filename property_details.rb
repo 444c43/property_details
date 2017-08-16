@@ -1,27 +1,26 @@
-require_relative 'property_methods'
+require_relative 'record_builder'
 require 'open-uri'
 require 'nokogiri'
 require 'csv'
 require 'yaml'
+require 'byebug'
 
 class PropertyDetails 
-  include PropertyMethods
+  include RecordBuilder 
 
   def initialize
-    @re_numbers = ["1200670000", "1200100000", "1543790900"]
+    @re_numbers = open_re_file 
     @base_url = "http://apps.coj.net/PAO_PROPERTYSEARCH/Basic/Detail.aspx?RE="
+    @dom = YAML.load_file('config/dom_elements.yaml')
   end
 
   def create_csv
     CSV.open("output.csv", "w+") do |csv|
-      csv << headers
-
+      csv << headers 
       re_numbers.each do |re_num|
-        line = map_dom_elements(re_num)
-        line["re_num"] = re_num
-        line = modify_key_values(line)
-
-        csv << line.sort.to_h.values
+        @page = get_page(re_num)
+        line = create_record.merge({"re_num" => re_num})
+        csv << line.values
       end
     end
   end
@@ -30,16 +29,17 @@ class PropertyDetails
 
   attr :re_numbers, :base_url, :doc
 
-  def map_dom_elements(re_num)
-    doc = Nokogiri::HTML(open(base_url + re_num))
-    YAML.load_file('dom_elements.yaml').map do 
-      |key,value| [key, doc.css(value).text]
-    end.to_h
+  def open_re_file
+    File.open('numbers.txt').map { |line| line.chomp}
   end
 
-  def headers
-    header_list = YAML.load_file('headers.yaml')
-    header_list.sort.to_h.values
+  def create_record
+    line = map_dom_elements
+    line.merge(add_tables)
+  end
+
+  def get_page(re_num)
+    Nokogiri::HTML(open(base_url + re_num))
   end
 end
 
