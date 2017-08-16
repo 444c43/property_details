@@ -1,4 +1,4 @@
-require_relative 'record_builder'
+require_relative 'lib/record_builder'
 require 'open-uri'
 require 'nokogiri'
 require 'csv'
